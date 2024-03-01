@@ -1,32 +1,31 @@
+# Dappazon
 
-# Hardhat-Tailwind-React Ethers Starter Kit
-Speedily develope your decentralized application with this starter kit for free!
+## Technology Stack & Tools
 
-Follow the steps below to download, install, and run this project.
+- Solidity (Writing Smart Contracts & Tests)
+- Javascript (React & Testing)
+- [Hardhat](https://hardhat.org/) (Development Framework)
+- [Ethers.js](https://docs.ethers.io/v5/) (Blockchain Interaction)
+- [React.js](https://reactjs.org/) (Frontend Framework)
 
-## Dependencies
-Install these prerequisites to follow along with the tutorial. See free video tutorial or a full explanation of each prerequisite.
-- NPM: https://nodejs.org
-- Hardhat: https://hardhat.org/
-- EthersJs: https://ethers.org/
-- Tailwind CSS: https://tailwindcss.com/
+## Requirements For Initial Setup
+- Install [NodeJS](https://nodejs.org/en/)
 
+## Setting Up
+### 1. Clone/Download the Repository
 
-## Step 1. Clone the project
-`git clone https://github.com/Daltonic/tailwind_ethers_starter_kit <PROJECT NAME>`
+### 2. Install Dependencies:
+`$ npm install`
 
-## Step 2. Install dependencies
-```sh
-$ cd <PROJECT NAME>
-$ yarn install # or npm install
-```
-## Step 3. Start Hardhat Node
-Open the terminal and run the command below.
-```sh
-$ yarn hardhat node
-```
+### 3. Run tests
+`$ npx hardhat test`
 
-## Step 4. Run the Front End Application
-`$ yarn start`
-Visit this URL in your browser: http://localhost:3000
+### 4. Start Hardhat node
+`$ npx hardhat node`
 
+### 5. Run deployment script
+In a separate terminal execute:
+`$ npx hardhat run ./scripts/deploy.js --network localhost`
+
+### 6. Start frontend
+`$ npm run start`
