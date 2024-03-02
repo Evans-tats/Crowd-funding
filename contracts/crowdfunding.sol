@@ -30,6 +30,14 @@ contract crowdfunding {
         statusEnum status;
     }
 
+    struct backerStruct {
+        address owner;
+        uint contribution;
+        uint timestamp;
+        bool refunded;
+
+    }
+
     enum statusEnum {
         OPEN,
         APPROVED,
@@ -47,7 +55,7 @@ contract crowdfunding {
     
     mapping(uint256 => bool) public projectExist;
     mapping(address => projectStruct[]) public projectsof;
-    
+    mapping(uint => backerStruct[]) public backersOf;
     
 
     constructor(uint _projectTax) {
@@ -124,6 +132,52 @@ contract crowdfunding {
         return true;
 
 
+    }
+    
+    
+    function deleteProject(uint id) public returns(bool) {
+        require(msg.sender == projects[id].owner, "unaothorizd acces");
+        require(projects[id].status == statusEnum.OPEN, "Project no longer exists" );
+
+        projects[id].status = statusEnum.DELETED;
+        performRefund(id);
+
+        emit Action(
+            id,
+            "PROJECCT DELETED",
+            msg.sender,
+            block.timestamp
+        );
+
+        return true;
+
+    }
+    function backProject(uint id) public payable returns(bool) {
+        require(msg.value > 0 ether, "Ether must be grater than Zero");
+        require(projectExist[id], "Project not found" );
+        require(projects[id].status == statusEnum.OPEN, "Project no longer open");
+
+    }
+
+    function performRefund(uint id) internal {
+        for (uint i =0; i < backersOf[id].length; i++) {
+           address _owner = backersOf[id][i].owner;
+           uint _contribution = backersOf[id][i].contribution;
+           
+           payTo(_owner, _contribution);
+
+           backersOf[id][i].refunded = true;
+           backersOf[id][i].timestamp = block.timestamp;
+
+           stats.totalBanking -= 1;
+           stats.totalDonation -= _contribution;    
+
+        }
+    }
+
+    function payTo(address to, uint amount) internal {
+        (bool success, ) = payable(to).call{value: amount}("");
+        require(success);
     }
 
 }
