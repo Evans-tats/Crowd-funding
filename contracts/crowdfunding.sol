@@ -7,7 +7,7 @@ contract crowdfunding {
     uint public projectCount;
     uint public balance;
     statsStruct public stats;
-    projectStruct[] public projects;
+    projectStruct[] projects;
     
 
     struct statsStruct {
@@ -48,6 +48,7 @@ contract crowdfunding {
     mapping(uint256 => bool) public projectExist;
     mapping(address => projectStruct[]) public projectsof;
     
+    
 
     constructor(uint _projectTax) {
         owner = msg.sender;
@@ -67,7 +68,6 @@ contract crowdfunding {
         require(bytes(description).length > 0, "description can't be empty");
         require(bytes(imageURL).length > 0, "imageURL cannot be empty");
         require(cost > 0 ether, "cost cannot be zero");
-
         projectStruct memory project;
         project.id = projectCount;
         project.owner = msg.sender;
@@ -77,26 +77,54 @@ contract crowdfunding {
         project.cost = cost;
         project.timestamp = block.timestamp;
         project.expiresAt = expiresAt;
-        projectCount++;
+        
 
         projects.push(project);
         projectExist[projectCount] = true;
         projectsof[msg.sender].push(project);
         stats.totalProjects += 1;
 
+        emit Action(
+            projectCount++,
+            "PROJECT UPDATED", 
+            msg.sender, 
+            block.timestamp
+        );
+
         return true;
     }
 
     function updateProject(
-        uint id,
-        string memory title,
-        string memory description,
-        string memory imageURL,
-        uint expireAt
+        uint256 id,
+        string memory _title,
+        string memory _description,
+        string memory _imageURL,
+        uint _expireAt
     ) public returns (bool) {
+        require(msg.sender == projects[id].owner, "unaothurized Entity");
+        require(projectExist[id], "project  not found");
+        require(bytes(_title).length > 0, "Title can't be empty");
+        require(bytes(_description).length > 0, "Description can't be empty");
+        require(bytes(_imageURL).length > 0, "Image URL can't be empty");
+        projectStruct memory project = projects[id];
+
+        project.title = _title;
+        project.description = _description;
+        project.imageURL = _imageURL;
+        project.expiresAt = _expireAt;
+
+        emit Action(
+            id, 
+            "PROJECT UPDATED",
+            msg.sender,
+            block.timestamp
+        );
+
+
+        return true;
+
 
     }
-
 
 }
 
