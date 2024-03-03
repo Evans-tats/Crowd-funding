@@ -51,5 +51,19 @@ describe("Dappazon", () => {
       expect(transaction).to.emit(crowdfunding, "Action")
     })
   })
+
+  describe("backing project", async () =>{
+    beforeEach(async () => {
+      let transaction = await crowdfunding.createProject(_title,_description,_imageURL,cost,_expireat)
+      await transaction.wait()
+    })
+    it('describe backing project', async () =>{
+      let transaction = await crowdfunding.backProject(0, { value : 5}) 
+      await transaction.wait()
+      expect(crowdfunding.backersOf(0).owner).to.be.equal(owner.address)
+
+      expect(transaction).to.emit(transaction, "Action")
+    })
+  })
   
 })

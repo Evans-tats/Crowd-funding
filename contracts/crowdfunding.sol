@@ -12,7 +12,7 @@ contract crowdfunding {
 
     struct statsStruct {
         uint totalProjects;
-        uint totalBanking;
+        uint totalBacking;
         uint totalDonation;
     }
 
@@ -156,6 +156,26 @@ contract crowdfunding {
         require(msg.value > 0 ether, "Ether must be grater than Zero");
         require(projectExist[id], "Project not found" );
         require(projects[id].status == statusEnum.OPEN, "Project no longer open");
+        
+        stats.totalBacking += 1;
+        stats.totalDonation += msg.value;
+        projects[id].raised += msg.value;
+        projects[id].backers += 1;
+
+        backersOf[id].push(
+            backerStruct(
+                msg.sender,
+                msg.value,
+                block.timestamp,
+                false
+            )
+        );
+
+        emit Action(0, "PROJECT BACKED", msg.sender, block.timestamp);
+
+        return(true);
+
+
 
     }
 
@@ -169,7 +189,7 @@ contract crowdfunding {
            backersOf[id][i].refunded = true;
            backersOf[id][i].timestamp = block.timestamp;
 
-           stats.totalBanking -= 1;
+           stats.totalBacking -= 1;
            stats.totalDonation -= _contribution;    
 
         }
