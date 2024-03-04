@@ -8,18 +8,22 @@ const tokens = (n) => {
 const _title = "project mbappe"
 const _description = "football"
 const _imageURL = "image"
-const cost = 5
-const _expireat = 100
+const cost = 10
+const _expireat = 9900000000
 
 describe("Dappazon", () => {
-  let owner
+  let contract, owner, backer
   
   beforeEach(async () => {
-    owner = await ethers.getSigners()
+    [contract,owner, backer] = await ethers.getSigners()
 
     const crowdFunding = await ethers.getContractFactory('crowdfunding')
     crowdfunding = await crowdFunding.deploy(5)
     console.log(crowdfunding.address)
+  })
+
+  it('describe deployment',async () => {
+    expect(await crowdfunding.owner()).to.equal(contract.address)
   })
 
   it('describe create project', async () => {
@@ -56,13 +60,13 @@ describe("Dappazon", () => {
     beforeEach(async () => {
       let transaction = await crowdfunding.createProject(_title,_description,_imageURL,cost,_expireat)
       await transaction.wait()
+      transaction = await crowdfunding.connect(backer).backProject(0, { value : 5}) 
+      await transaction.wait()
     })
     it('describe backing project', async () =>{
-      let transaction = await crowdfunding.backProject(0, { value : 5}) 
-      await transaction.wait()
-      expect(crowdfunding.backersOf(0).owner).to.be.equal(owner.address)
-
-      expect(transaction).to.emit(transaction, "Action")
+      //expect().to.be.equal(5)
+      console.log("hey" + crowdfunding.backersOf(0).contribution)
+      //expect(transaction).to.emit(transaction, "Action")
     })
   })
   

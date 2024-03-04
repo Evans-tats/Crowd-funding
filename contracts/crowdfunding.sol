@@ -52,6 +52,11 @@ contract crowdfunding {
         address indexed executor,
         uint256 timestamp
     );
+
+    modifier ownerOnly() {
+        require(msg.sender == owner, "owner only can call this function");
+        _;
+    }
     
     mapping(uint256 => bool) public projectExist;
     mapping(address => projectStruct[]) public projectsof;
@@ -171,7 +176,22 @@ contract crowdfunding {
             )
         );
 
-        emit Action(0, "PROJECT BACKED", msg.sender, block.timestamp);
+        emit Action(id, "PROJECT BACKED", msg.sender, block.timestamp);
+
+        if(projects[id].raised >= projects[id].cost) {
+
+            projects[id].status = statusEnum.APPROVED;
+            balance += projects[id].raised;
+            performPayout(id);
+            return true;
+        }
+
+        if(block.timestamp >= projects[id].expiresAt) {
+            projects[id].status = statusEnum.REVERTED;
+            performRefund(id);
+            return true;
+        
+        }
 
         return(true);
 
@@ -194,10 +214,48 @@ contract crowdfunding {
 
         }
     }
+ 
+
 
     function payTo(address to, uint amount) internal {
         (bool success, ) = payable(to).call{value: amount}("");
         require(success);
+    }
+
+    function performPayout(uint id) internal {
+        uint raised = projects[id].raised;
+        uint tax = (raised * projectTax) / 100;
+
+        projects[id].status = statusEnum.PAIDOUT;
+
+        payTo(projects[id].owner, (raised - tax));
+        payTo(owner, tax);
+
+        balance -= raised;
+
+        emit Action (
+            id,
+            "PROJECT PAID OUT",
+            msg.sender,
+            block.timestamp
+        );
+    }
+
+    function changeTax(uint _taxpct) public ownerOnly {
+        projectTax = _taxpct;
+    }
+
+    function getProject(uint id) public view returns(projectStruct memory){
+        require(projectExist[id], "project not found");
+        return projects[id];
+    }
+
+    function getprojects() public view returns(projectStruct[] memory) {
+        return projects;
+    }
+
+    function getBackers(uint id) public view returns(backerStruct[] memory) {
+        return backersOf[id];
     }
 
 }
