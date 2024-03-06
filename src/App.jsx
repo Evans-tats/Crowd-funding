@@ -12,13 +12,14 @@ import Dappazon from './abis/Dappazon.json'
 // Config
 import config from './config.json'
 import Header from './components/Header'
+import Motto from './components/Motto'
 
 function App() {
 
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen relative'>
       < Header />
-
+      < Motto />
     </div>
   );
 }
