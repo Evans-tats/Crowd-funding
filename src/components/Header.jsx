@@ -1,7 +1,7 @@
 const Header = () => {
   return (
     <header className="p-5 flex justify-between items-center shadow-lg fixed top-0 left-0 right-0 text-gray-500 hover:text-gray-700">
-      <a href="#" className="flex justify-start items-center text-xl text-black">
+      <a href="/" className="flex justify-start items-center text-xl text-black">
         <span>Crowd Funding</span>
   
       </a>
