@@ -1,8 +1,13 @@
+import ProjectBackers from "../ProjectBackers"
 import { ProjectDetails } from "../ProjectDetails"
 
 const ProjectPage = () => {
   return (
-    <ProjectDetails />
+    <>
+      <ProjectDetails />
+      <ProjectBackers />
+    </>
+    
   )
 }
 

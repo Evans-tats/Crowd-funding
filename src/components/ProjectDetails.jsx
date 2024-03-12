@@ -1,7 +1,7 @@
 
 export const ProjectDetails = () => {
   return (
-    <div className="py-20 px-4">
+    <div className="py-20 px-4 flex flex-col justify-center">
         <div className='flex justify-start items-start flex-wrap sm:space-x-4 '>
         <img src="https://e0.pxfuel.com/wallpapers/630/889/desktop-wallpaper-anonymous-wonderful-anonymous-background-fn-ng-thumbnail.jpg" alt="Project picture" 
         className="rounded-xl object-cover sm:w-1/3 w-full h-64"/>
@@ -21,6 +21,50 @@ export const ProjectDetails = () => {
             </div>
 
         </div>
+        </div>
+        <div className='sm:mt-4'>
+            <p className="text-sm font-light">
+            This iconic sentence decribes the Batman 
+            as what he represents, 
+            “I am vengeance” meaning that someone who
+            is doing bad stuff to people will eventually be hit by vengence 
+            for his actions by Batman, for ones who can't defend themselves.
+            </p>
+            <div className="w-full bg-gray-300 mt-4">
+                <div className='bg-green-600 text-green-100 p-0.5 text-xs rounded-l-full
+                leading-none' style={{width: '50%'}}></div>
+            </div>
+
+            <div className="flex justify-between">
+                <div >
+                    <small>{3} ETH Raised</small>
+                </div>
+                <div>
+                    <small>{10} ETH</small>
+                </div>
+            </div>
+            <div className="flex justify-center">
+                <button type="button"
+                className='inline-block px-6 py-2.5 rounded-full hover:bg-green-700
+                shadow-md text-white bg-green-500'>
+                    BACK PROJECT
+                </button>
+                <button type="button"
+                className='inline-block px-6 py-2.5 rounded-full hover:bg-green-700
+                shadow-md text-white bg-gray-500'>
+                    EDIT
+                </button>
+                <button type="button"
+                className='inline-block px-6 py-2.5 rounded-full hover:bg-green-700
+                shadow-md text-white bg-gray-500'>
+                    PAYOUT
+                </button>
+                <button type="button"
+                className='inline-block px-6 py-2.5 rounded-full hover:bg-red-600
+                shadow-md text-white bg-red-500'>
+                    BACK PROJECT
+                </button>
+            </div>
         </div>
     </div>
   )
