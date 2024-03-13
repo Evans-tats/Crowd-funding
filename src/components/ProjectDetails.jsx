@@ -1,3 +1,4 @@
+import { setGlobalState } from "../Store"
 
 export const ProjectDetails = () => {
   return (
@@ -46,12 +47,14 @@ export const ProjectDetails = () => {
             <div className="flex justify-center">
                 <button type="button"
                 className='inline-block px-6 py-2.5 rounded-full hover:bg-green-700
-                shadow-md text-white bg-green-500'>
+                shadow-md text-white bg-green-500'
+                onClick={() => setGlobalState('backModal', 'scale-100')}>
                     BACK PROJECT
                 </button>
                 <button type="button"
                 className='inline-block px-6 py-2.5 rounded-full hover:bg-green-700
-                shadow-md text-white bg-gray-500'>
+                shadow-md text-white bg-gray-500'
+                onClick={() => setGlobalState('updateModal', 'scale-100')}>
                     EDIT
                 </button>
                 <button type="button"
@@ -62,7 +65,7 @@ export const ProjectDetails = () => {
                 <button type="button"
                 className='inline-block px-6 py-2.5 rounded-full hover:bg-red-600
                 shadow-md text-white bg-red-500'>
-                    BACK PROJECT
+                    BACK
                 </button>
             </div>
         </div>

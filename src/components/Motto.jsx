@@ -1,3 +1,4 @@
+import { setGlobalState } from "../Store"
 const Motto = () => {
   return (
     <div className="py-24 text-center text-gray-800 ">
@@ -12,15 +13,11 @@ const Motto = () => {
             className="inline-block px-6 py-2 bg-green-500
             font-medium text-xs 
             leading-tight rounded-full shadow-md
-             hover:bg-green-400 uppercase bg-transparent text-gray-600">ADD project
+             hover:bg-green-400 uppercase bg-transparent text-gray-600 first-letter first-letter"
+            onClick={() => setGlobalState('createModal', 'scale-100')}
+             >ADD project
             </button>
-        
-            <button type
-            className="inline-block px-6 py-2 bg-green-500
-            font-medium text-xs 
-            leading-tight rounded-full shadow-md
-            hover:bg-green-400 bg-transparent text-gray-600 uppercase">BACK project
-            </button>
+    
         </div>
 
         <div className="mt-10 flex">

@@ -1,16 +1,16 @@
 import {FaTimes} from 'react-icons/fa';
 import { useGlobalState, setGlobalState} from '../Store';
-const CreateProject = () => {
-    const [createModal] = useGlobalState('createModal');
+const updateProject = () => {
+    const [updateModal] = useGlobalState('updateModal');
   return (
-    <div className={`fixed top-0 left-0 w-screen flex item-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${createModal}`}>
+    <div className={`fixed top-0 left-0 w-screen flex item-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${updateModal}`}>
         <div className="bg-white rounded-xl w-11/12 md:w-2/5 h-7/12 p-6">
             <form>
                 <div className='flex items-center justify-between'>
                     <p>#Project Title</p>
                     <button type="button"
                     className="border-0 bg-transparent focus:outline-none"
-                    onClick={() => setGlobalState('createModal', 'scale-0')}>
+                    onClick={() => setGlobalState('updateModal', 'scale-0')}>
                         <FaTimes />
                     </button>
                 </div>
@@ -92,4 +92,4 @@ const CreateProject = () => {
   )
 }
 
-export default CreateProject
+export default updateProject
