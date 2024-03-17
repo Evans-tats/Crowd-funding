@@ -56,19 +56,20 @@ const getContract = async () => {
 
 }
 
-const createProject = async({
+const createProject = async (
     title,
     description,
     imageURL,
     cost,
     expireAt,
-}) => {
+) => {
     try {
         if(!ethereum) return alert('please connecct to Metamask ')
          
         const contract = await getContract()
         cost = ethers.utils.parseEther(cost)
-        tx = await contract.createProject(title, description, imageURL,cost,expireAt)
+        tx = await contract.createProject(title, description, imageURL,cost ,expireAt)
+        console.log(done)
         await tx.wait()
     } catch (error) {
         reportError(error)

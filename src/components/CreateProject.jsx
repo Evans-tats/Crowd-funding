@@ -27,10 +27,10 @@ const CreateProject = () => {
             cost,
             expiresAt: toTimestamp(date),
         }
-        console.log(params)
-        await createProject(params)
+        console.log(params.title, params.description, params.ImageURL, params.cost, params.expiresAt)
+        await createProject(params.title, params.description, params.ImageURL, params.cost, params.expiresAt)
         console.log(done)
-        //toast.success('Project created successfully, will reflect in 30 sec.')
+        toast.success('Project created successfully, will reflect in 30 sec.')
     }
   return (
     <div className={`fixed top-0 left-0 w-screen flex item-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${createModal}`}>
