@@ -16,6 +16,19 @@ const CreateProject = () => {
         return dateObj / 1000
     }
 
+    const onClose = () => {
+        setGlobalState('createModal', 'scale-0')
+        reset()
+    }
+
+    const reset = () => {
+        setTitle('')
+        setDescription('')
+        setCost('')
+        setDate('')
+        setImageURL('')
+    }
+
     const handleSubmit = async(e) => {
         e.preventDefault()
         if (!title || !description || !cost || !date || !ImageURL) return
@@ -31,6 +44,7 @@ const CreateProject = () => {
         await createProject(params.title, params.description, params.ImageURL, params.cost, params.expiresAt)
         console.log(done)
         toast.success('Project created successfully, will reflect in 30 sec.')
+        onClose()
     }
   return (
     <div className={`fixed top-0 left-0 w-screen flex item-center justify-center bg-black bg-opacity-50 transform transition-transform duration-300 ${createModal}`}>
@@ -40,7 +54,7 @@ const CreateProject = () => {
                     <p>#Project Title</p>
                     <button type="button"
                     className="border-0 bg-transparent focus:outline-none"
-                    onClick={() => setGlobalState('createModal', 'scale-0')}>
+                    onClick={onClose}>
                         <FaTimes />
                     </button>
                 </div>

@@ -75,7 +75,66 @@ const createProject = async (
         reportError(error)
     }
 }
-   
+
+const loadProjects = async () => {
+    try {
+        if (!ethereum) return alert('please install Metamask')
+        
+        const contract = await getContract()
+        const Projects = await contract.getprojects()
+        const Stats = await contract.stats()
+
+        setGlobalState('stats', structuredStats(Stats))
+        setGlobalState('projects',structuredProjects(Projects))
+
+        //console.log(structuredProjects(Projects))
+        console.log('done f')
+        //console.log(structuredStats(Stats))
+    }catch (error) {
+        reportError(error)
+    }
+}
+
+
+const structuredProjects = (projects) => 
+  projects
+    .map((project) => ({
+        id: toNumber(project.id),
+        owner: project.owner,
+        title: project.title,
+        description: project.description,
+        timestamp: new Date(toNumber(project.timestamp)).getTime(),
+        expireAt: new Date(toNumber(project.expiresAt)).getTime(),
+        Date: toDate(toNumber(project.expiresAt) * 1000),
+        imageURL: project.imageURL,
+        raised: parseInt(project.raised._hex) / 10 ** 18,
+        cost: parseInt(project.cost._hex) / 10 ** 18,
+        backers: toNumber(project.backers),
+        status: project.status,
+    }))
+    .reverse()
+
+const toDate = (timestamp) => {
+    const date = new Date(timestamp);
+    
+    const dd = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`;
+    const mm = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`;
+    const yyyy = date.getFullYear();
+    
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+const structuredStats = (stats) => ({
+    totalProjects: toNumber(stats.totalProjects),
+    totalBackings: toNumber(stats.totalBacking),
+    totalDonations: parseInt(stats.totalDonation._hex) / 10**18,
+
+})
+  
+const toNumber = (value) => {
+    return Number(value);
+}  
+
 
 const reportError = (error) => {
     console.log(error.message)
@@ -85,5 +144,6 @@ const reportError = (error) => {
 export {
     connectWallet,
     isWalletConnected,
-    createProject
+    createProject,
+    loadProjects
 }

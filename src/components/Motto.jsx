@@ -1,5 +1,6 @@
-import { setGlobalState } from "../Store"
+import { setGlobalState, useGlobalState } from "../Store"
 const Motto = () => {
+    const [stats] = useGlobalState('stats')
   return (
     <div className="py-24 text-center text-gray-800 ">
         <h1 className="text-4xl md:text-5xl xl:text-6xl tracking-tight mb-12">
@@ -24,21 +25,21 @@ const Motto = () => {
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{0}</span>
+                <span className="text-lg ">{stats.totalProjects}</span>
 
                 <span>Projects</span>
             </div>
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{0}</span>
+                <span className="text-lg ">{stats.totalBackings}</span>
 
                 <span>TOTAL BACKINGS</span>
             </div>
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{0} ETH</span>
+                <span className="text-lg ">{stats.totalDonations} ETH</span>
 
                 <span>TOTAL AMOUNT DONATED</span>
             </div>
