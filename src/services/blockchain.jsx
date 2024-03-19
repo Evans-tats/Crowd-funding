@@ -95,6 +95,37 @@ const loadProjects = async () => {
     }
 }
 
+const loadProject = async(id) => {
+    try {
+        if (!ethereum) return alert('Please install Metamask')
+
+        const contract = await getContract()
+        const project = await contract.getProject(id)
+        console.log('oooops')
+        //setGlobalState('project',structuredProjects(project))
+        setGlobalState('project',structuredProjects([project])[0])
+       // console.log('done2')
+        //console.log(project)
+        console.log("project loaded")
+    }catch(error) {
+        reportError(error)
+    }
+}
+
+const loadBackers = async(id) => {
+    try {
+        if(!ethereum)return alert("Please install Metamask")
+        
+        const contract = getContract()
+        const projectBackers =contract.backersOf(id)
+        console.log(projectBackers)
+        //setGlobalState('projectBackers')
+
+
+    }catch(error) {
+        reportError(error)
+    }
+}
 
 const structuredProjects = (projects) => 
   projects
@@ -145,5 +176,7 @@ export {
     connectWallet,
     isWalletConnected,
     createProject,
-    loadProjects
+    loadProjects,
+    loadProject,
+    loadBackers
 }

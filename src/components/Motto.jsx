@@ -25,21 +25,21 @@ const Motto = () => {
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{stats.totalProjects}</span>
+                <span className="text-lg ">{0}</span>
 
                 <span>Projects</span>
             </div>
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{stats.totalBackings}</span>
+                <span className="text-lg ">{0}</span>
 
                 <span>TOTAL BACKINGS</span>
             </div>
             <div 
                 className="flex flex-col justify-center items-center
                 h-20 border shadow-md w-full">
-                <span className="text-lg ">{stats.totalDonations} ETH</span>
+                <span className="text-lg ">{0} ETH</span>
 
                 <span>TOTAL AMOUNT DONATED</span>
             </div>

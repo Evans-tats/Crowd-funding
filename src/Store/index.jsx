@@ -7,7 +7,9 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
    backModal: 'scale-0',
    connectedAccount: '',
    projects: [],
-   stats: null
+   project: null,
+   stats: null,
+   projectBackers: []
 });
 
 

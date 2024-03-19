@@ -21,17 +21,24 @@ import { ToastContainer } from 'react-toastify'
 
 
 function App() {
+  const [loaded, setLoaded] = useState(false)
+  
   useEffect(async() => {
     await isWalletConnected()
+    setLoaded(true)
   }, [])
   return (
     <div className='min-h-screen relative'>
       < Header />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/projects/:id' element={<ProjectPage/>} />
+      
+        {loaded ? (
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/projects/:id' element={<ProjectPage/>} />
+          </Routes>
+        ) : null}
         
-      </Routes>
+      
 
       <ToastContainer
         position = 'top-center'
