@@ -116,8 +116,8 @@ const loadBackers = async(id) => {
     try {
         if(!ethereum)return alert("Please install Metamask")
         
-        const contract = getContract()
-        const projectBackers =contract.backersOf(id)
+        const contract = await getContract()
+        const projectBackers =contract.getBackers(id)
         console.log(projectBackers)
         //setGlobalState('projectBackers')
 
@@ -155,6 +155,26 @@ const toDate = (timestamp) => {
     return `${yyyy}-${mm}-${dd}`;
 }
 
+const backProject = async(id, amaount) => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+
+        const connectedAccount = getGlobalState('connectedAccount')
+        const contract = await getContract()
+        amaount = ethers.utils.parseEther(amaount)
+        const tx = await contract.backProject(id , {
+            from: connectedAccount,
+            value: amaount._hex,
+        })
+        await tx.wait()
+        console.log("backing sucessfull")
+        console.log(tx)
+    }catch(error) {
+        reportError(error)
+    }
+   
+}
+
 const structuredStats = (stats) => ({
     totalProjects: toNumber(stats.totalProjects),
     totalBackings: toNumber(stats.totalBacking),
@@ -178,5 +198,6 @@ export {
     createProject,
     loadProjects,
     loadProject,
+    backProject,
     loadBackers
 }
