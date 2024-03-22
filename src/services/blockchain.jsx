@@ -2,6 +2,7 @@ import abi from '../abis/crowdfunding.json'
 import address from '../abis/contractAddress.json'
 import { setGlobalState, getGlobalState } from '../Store'
 import { ethers } from 'ethers'
+import { Await } from 'react-router-dom'
 
 const { ethereum } = window
 const contractAddress = address.address
@@ -75,6 +76,21 @@ const createProject = async (
         reportError(error)
     }
 }
+const updateProject = async(
+    id, title, description, expireAt,imageURL
+) => {
+    try {
+        if (!ethereum) return alert("please connect to wallet")
+
+        const contract = await getContract()
+        const tx = contract.updateProject(id, title, description, imageURL, expireAt)
+        await tx.wait()
+        await loadProject(id)
+        console.log("updated project seccesfull")
+    } catch (error) {
+        reportError(error)
+    }
+}
 
 const loadProjects = async () => {
     try {
@@ -117,15 +133,26 @@ const loadBackers = async(id) => {
         if(!ethereum)return alert("Please install Metamask")
         
         const contract = await getContract()
-        const projectBackers =contract.getBackers(id)
-        console.log(projectBackers)
-        //setGlobalState('projectBackers')
+        const projectBackers = await contract.getBackers(id)
+        console.log(structuredBackers(projectBackers))
+        console.log("Project backers")
+        setGlobalState('projectBackers', structuredBackers(projectBackers))
 
 
     }catch(error) {
         reportError(error)
     }
 }
+
+const structuredBackers = (backers) => 
+  backers
+    .map((backer) => ({
+        owner: backer.owner.toLowerCase(),
+        refunded: backer.refunded,
+        timestamp: new Date(toNumber(backer.timestamp) * 1000).toJSON(),
+        contribution: parseInt(backer.contribution._hex) / 10 ** 18,
+    }))
+    .reverse()
 
 const structuredProjects = (projects) => 
   projects
@@ -199,5 +226,6 @@ export {
     loadProjects,
     loadProject,
     backProject,
+    updateProject,
     loadBackers
 }

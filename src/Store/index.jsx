@@ -1,5 +1,6 @@
 import moment from "moment";
 import { createGlobalState } from "react-hooks-global-state";
+import Moment from "react-moment";
 
 const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
    createModal: 'scale-0', 
@@ -12,11 +13,18 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
    projectBackers: []
 });
 
+const daysRemaining = (days) => {
+    const todaysdate = moment();
+    const remainingDays = moment(days).diff(todaysdate, 'days');
+    return remainingDays === 1 ? ' 1 day' : remainingDays + ' days ';
+};
+
 
 
 export {
     useGlobalState,
     setGlobalState,
     getGlobalState,
+    daysRemaining,
 
 }

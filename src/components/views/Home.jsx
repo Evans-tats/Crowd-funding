@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import CreateProject from "../CreateProject"
 import Motto from "../Motto"
 import Projectss from "../Projectss"
@@ -7,18 +7,19 @@ import { useGlobalState } from "../../Store"
 
 const Home = () => {
   const [projects] = useGlobalState('projects')
-
+  const [loaded, setLoaded] = useState(false)
   useEffect(async () => {
     await loadProjects()
+    setLoaded(true)
   }, [])
-  return (
+  return loaded ? (
     <div>
         <Motto />
         <Projectss projects={projects} />
         <CreateProject/>
         
     </div>
-  )
+  ) : null
 }
 
 export default Home

@@ -1,7 +1,9 @@
-import { setGlobalState } from "../Store"
+import { daysRemaining, setGlobalState } from "../Store"
 
 export const ProjectDetails = ( { project }) => {
     console.log(project)
+    const widthP = `${(project?.raised / project?.cost) * 100}%`
+    const expired = new Date().getTime() > Number(project.expiresAt + '000')
   return (
     <div className="py-20 px-4 flex flex-col justify-center">
         <div className='flex justify-start items-start flex-wrap sm:space-x-4 '>
@@ -10,7 +12,7 @@ export const ProjectDetails = ( { project }) => {
         <div className="sm:py-0 py-4">
             <div>
                 <h5>{project.title}</h5>
-                <small>3 days left</small>
+                <small>{expired ? 'Expired' : daysRemaining(project.expiresAt) + 'left'} </small>
             </div>
             <div className='flex justify-between items-center w-full'>
                <div className="flex justify-start space-x-2">
@@ -40,7 +42,9 @@ export const ProjectDetails = ( { project }) => {
             <p className="text-sm font-light">{project.description}</p>
             <div className="w-full bg-gray-300 mt-4">
                 <div className='bg-green-600 text-green-100 p-0.5 text-xs rounded-l-full
-                leading-none' style={{width: project.raised / project.cost * 100}}></div>
+                leading-none' 
+                style={{width: widthP}}
+                ></div>
             </div>
 
             <div className="flex justify-between">

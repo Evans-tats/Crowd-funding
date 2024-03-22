@@ -1,4 +1,7 @@
-const ProjectBackers = () => {
+import Moment from "react-moment"
+
+const ProjectBackers = ( {backers}) => {
+    console.log(backers)
   return (
     <div className="flex flex-col justify-center w-full ">
         <div className="max-h-[calc(100vh_-_20rem)] overflow-y-auto
@@ -25,22 +28,9 @@ const ProjectBackers = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {Array(6).fill().map((backing, i) => (
-                        <tr key={i} className="border-b border-gray-200"> 
-                        <td className="text-sm font-light py-4">
-                            03xf..2f6d{i}
-                        </td>
-                        <td className="text-sm font-light">
-                            Data
-                        </td>
-                        <td className="text-sm font-light"> 
-                            {false ? 'Yes' : 'No'}
-                        </td>
-                        <td className="text-sm font-light">
-                            {new Date().getTime()}
-                        </td>
-                    </tr>
-                    ))}
+                    { backers.map((backer, i) => {
+                        return <Backer key={i} backer={backer} />
+                    })}
                 </tbody>
             </table>
 
@@ -48,5 +38,24 @@ const ProjectBackers = () => {
     </div>
   )
 }
+const Backer = ( {backer } ) => (
+    <tr className="border-b border-gray-400">
+        <td className="text-sm font-light px-6 py-4 whitespace-nowrap">
+            <div>
+                <span>{backer.owner.slice(0,6)+ '...'+ backer.owner.slice(38, 42)}</span>
+            </div>
+
+        </td>
+        <td>
+            <small>{backer.contribution} ETH</small>
+        </td>
+        <td>
+            {backer.refunded ? 'Yes' : 'No'}
+        </td>
+        <td>
+            <Moment fromNow>{backer.timestamp}</Moment>
+        </td>
+    </tr>
+)    
 
 export default ProjectBackers

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Identicons from 'react-identicons';
 
 const Projectss = ( {projects}) => {
+    
   return (
     <div className="flex flex-col px-6">
         <div className="flex justify-center items-center flex-wrap">
@@ -13,6 +14,7 @@ const Projectss = ( {projects}) => {
 };
 
 const ProjectCard = ({ project }) => (
+    
     <div className="rounded-lg shadow-lg bg-white w-64 m-4">
         <Link to={"/projects/" + project.id}>
             <img src={project.imageURL} alt={project.title}
@@ -30,7 +32,7 @@ const ProjectCard = ({ project }) => (
                 </div>
                 <div className='w-full bg-gray-300'>
                     <div className='bg-green-700 text-xs font-medium text-green-100 text-center p-0.5 leading-none
-                    rounded-l-full' style={{width: project.raised / project.cost *100 }}></div>
+                    rounded-l-full' style={{width: `${(project?.raised / project?.cost) * 100}%`}}></div>
 
                 </div>
                 <div className='flex justify-between items-center flex-wrap mt-1'>

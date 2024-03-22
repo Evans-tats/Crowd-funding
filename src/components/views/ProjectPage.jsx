@@ -25,7 +25,7 @@ const ProjectPage = () => {
     <>
       <ProjectDetails project={project}/>
       <ProjectBackers backers={backers} />
-      <UpdateProject/>
+      <UpdateProject project = {project}/>
       <BackProject project={project}/>
     </>
     
